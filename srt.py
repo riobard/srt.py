@@ -4,10 +4,10 @@
 #
 # A Python script to manipulate .srt subtitles
 #
-# Version: 0.1
-# Author: Riobard
-# Email: me@riobard.com
-# Web: http://riobard.com
+# Version:  0.1
+# Author:   Riobard
+# Email:    me@riobard.com
+# Web:      http://riobard.com
 #################################################
 
 import re
@@ -20,9 +20,8 @@ from itertools import count
 
 def tc2ms(tc):
     ''' convert timecode to millisecond '''
-    #TIMECODE_RE     = re.compile('(\d\d):(\d\d):(\d\d),(\d\d\d)')
     TIMECODE_RE     = re.compile('(?:(?:(?:(\d?\d):)?(\d?\d):)?(\d?\d))?(?:,(\d?\d?\d))?')
-    # note this above regex matches all following cases
+    # NOTE the above regex matches all following cases
     # 12:34:56,789
     # 01:02:03,004
     # 1:2:3,4   => 01:02:03,004
@@ -56,21 +55,7 @@ def ms2tc(ms):
 class Timecode(object):
     def __init__(self, t):
         '''
-        Construct a timecode from its string representation
-
-        Legal forms:
-
-        123         # seconds (can be >= 60)
-        ,456        # millionseconds (can be >= 1000)
-        123,456     # seconds and million seconds
-        45:32       # minutes and seconds
-        45:32,012   # mintues, seconds, milliseconds
-        1:5:51      # hours, minutes, seconds
-        1:2:3,4     # hours, minutes, seconds
-        01:02:03,004    # perfect form
-
-
-        currently only accept perfect form
+        Construct a Timecode object from string representation or milliseconds
         '''
 
         if type(t) == int:  # millisec.
@@ -133,7 +118,7 @@ def format(ls):
 
 def shift(stream, delta):
     '''
-    all time +delta
+    all timecode +delta
     '''
     return [(tc1+delta, tc2+delta, txt) for (tc1,tc2,txt) in stream]
 
