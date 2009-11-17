@@ -20,7 +20,7 @@ from itertools import count
 
 def tc2ms(tc):
     ''' convert timecode to millisecond '''
-    TIMECODE_RE     = re.compile('(?:(?:(?:(\d?\d):)?(\d?\d):)?(\d?\d))?(?:,(\d?\d?\d))?')
+    TIMECODE_RE     = re.compile('(?:(?:(?:(\d?\d):)?(\d?\d):)?(\d?\d))?(?:[,.](\d?\d?\d))?')
     # NOTE the above regex matches all following cases
     # 12:34:56,789
     # 01:02:03,004
@@ -31,6 +31,7 @@ def tc2ms(tc):
     # 1:2       => 00:01:02,000
     # 1:2,3     => 00:01:03,003
     # 1:2:3     => 01:02:03
+    # also accept "." instead of "," as millsecond separator
     match   = TIMECODE_RE.match(tc)
     try: 
         assert match is not None
