@@ -142,7 +142,7 @@ def concatenate(head, tail, tail_shift):
     '''
     Concatnate two srts by shifting the second and append to the first
     '''
-    return head + modify_all_time(tail, tail_shift)
+    return head + shift(tail, tail_shift)
 
 
 def split(stream, *ts):
