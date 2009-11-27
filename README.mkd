@@ -12,3 +12,7 @@ Usage
     python srt.py split subtitle.srt 42:30 45:10
 
 This will split `subtitle.srt` into three parts, named `subtitle.srt.000`, `subtitle.srt.001`, `subtitle.srt.002`, with the `subtitle.srt.000` being 42 minutes and 30 seconds in length, `subtitle.srt.001` being 45 minutes and 10 seconds in length, and `subtitle.srt.002` the rest of the original file. 
+
+    python srt.py shift subtitle.srt -,500 > new.subtitle.srt
+
+This will move the subtitle 500 milliseconds towards the beginning. Output is redirected to the file named `new.subtitle.srt`. Use this to sync subtitle with video. 

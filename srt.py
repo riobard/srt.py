@@ -20,6 +20,12 @@ from itertools import count
 
 def tc2ms(tc):
     ''' convert timecode to millisecond '''
+
+    sign    = 1
+    if tc[0] in "+-":
+        sign    = -1 if tc[0] == "-" else 1
+        tc  = tc[1:]
+
     TIMECODE_RE     = re.compile('(?:(?:(?:(\d?\d):)?(\d?\d):)?(\d?\d))?(?:[,.](\d?\d?\d))?')
     # NOTE the above regex matches all following cases
     # 12:34:56,789
@@ -38,7 +44,7 @@ def tc2ms(tc):
     except AssertionError:
         print tc
     hh,mm,ss,ms = map(lambda x: 0 if x==None else int(x), match.groups())
-    return (hh*3600 + mm*60 + ss) * 1000 + ms
+    return ((hh*3600 + mm*60 + ss) * 1000 + ms) * sign
 
 
 
@@ -179,9 +185,19 @@ def split_cmd(*args):
             open('%s.%03d'%(infile, no), 'wb').write(format(seg))
 
 
+def shift_cmd(*args):
+    if len(args) != 2:
+        print 'Usage: shift input_file.srt delta'
+    else:
+        infile  = args[0]
+        delta   = args[1]
+        print(format(shift(parse(infile), TC(delta))))
+
+
 
 def command_run(argv):
-    cmds    = {'split': split_cmd}
+    cmds    = {'split': split_cmd, 
+               'shift': shift_cmd}
     if len(argv) > 1 and argv[1] in cmds:
         cmds[argv[1]](*argv[2:])
     else:
